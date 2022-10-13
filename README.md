@@ -1,6 +1,6 @@
 # Hangman
 
-A web game of hangman using HTML, CSS & Javascript
+A web game of hangman using HTML, CSS & Javascript.
 
 # Screenshots
 
