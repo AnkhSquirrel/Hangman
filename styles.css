@@ -4,7 +4,7 @@
 }
 
 body{
-    background-color: #F2E5D5;
+    background-color: #272840;
     margin: 0;
     padding: 0;
 }
@@ -84,6 +84,7 @@ body{
 #buttons {
     background-color: #272840;
     padding-inline: 20px;
+    margin: auto;
 }
 
 #buttons>button{
@@ -94,7 +95,7 @@ body{
     margin: 10px;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1200px) {
     #buttons>button{
         width: 10vh;
         height: 7vh;
@@ -110,6 +111,15 @@ body{
     }
 }
 
+@media (orientation: landscape) {
+    #buttons>button{
+        font-size: 3vh;
+        width: 13.5vh;
+        height: 10vh;
+        border: 0;
+        margin: 10px;
+    }
+}
 .correctLetter{
     background-color: #506A64;
     color: #F2E5D5;
