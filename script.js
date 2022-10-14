@@ -1,5 +1,4 @@
-const wordPool = ["Fall", "Spring", "Summer", "Winter"]
-let wordToFind = "";
+let wordToFind;
 let lettersFound = 0;
 let life = 0;
 
@@ -12,12 +11,36 @@ function generateMenu(){
     playButton.setAttribute("id", "playButton");
     playButton.innerHTML = "Play the hangman!";
     playButton.onclick = function(){
-        play();
+        getRandomWord(false);
     };
     document.getElementById("menu").appendChild(playButton);
 }
 
-function play(){
+function getRandomWord(takeWordFromHardCodedDictionnary){
+    if(takeWordFromHardCodedDictionnary){
+        const wordPool = ["yes", "no"];
+        return wordPool[Math.floor(Math.random() * wordPool.length)];
+    } else {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", "https://random-word-api.herokuapp.com/word", true);
+        xhr.onload = (e) => {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    wordToFind = JSON.parse(xhr.responseText).find(x=>x!==undefined).toUpperCase();
+                    play();
+                } else {
+                    console.error(xhr.statusText);
+                }
+            }
+        };
+        xhr.onerror = (e) => {
+            console.error(xhr.statusText);
+        };
+        xhr.send(null);
+    }
+}
+
+ function play(){
     generateLife();
     generateWord();
     generateButtons();
@@ -36,13 +59,17 @@ function generateLife(){
 
 function generateWord() {
     lettersFound = 0;
-    wordToFind = getRandomWordFromPool().toUpperCase();
     document.getElementById("word").innerHTML = "";
     let word = document.getElementById("word");
     for (let i = 1; i <= wordToFind.length; i++) {
         let letter = document.createElement("span");
-        letter.innerHTML = "_";
-        letter.setAttribute("id", i.toString())
+        if (wordToFind.substring(i-1, i).match(/^[a-zA-Z]+$/)){
+            letter.innerHTML = "_";
+        } else {
+            letter.innerHTML = wordToFind.substring(i-1, i);
+            lettersFound++;
+        }
+        letter.setAttribute("id", i.toString());
         word.appendChild(letter);
     }
 }
@@ -125,12 +152,7 @@ function hideMenu(bool){
         document.getElementById("menu").style.display = "";
 }
 
-function getRandomWordFromPool(){
-    return wordPool[Math.floor(Math.random() * wordPool.length)];
-}
-
 function myKeyboardListener (event) {
-    console.log(event.key);
     if(event.key.match(/^[a-zA-Z]+$/))
         resolveLetter(event.key.toUpperCase())
 }

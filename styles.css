@@ -92,10 +92,10 @@ body{
     width: 13.5vh;
     height: 10vh;
     border: 0;
-    margin: 10px;
+    margin: 5px;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1300px) {
     #buttons>button{
         width: 10vh;
         height: 7vh;
@@ -103,15 +103,14 @@ body{
     }
 }
 
-@media (max-width: 670px) {
+@media (max-width: 900px) {
     #buttons>button{
         width: 8vh;
         height: 5vh;
-        margin: 2px;
     }
 }
 
-@media (orientation: landscape) {
+@media (orientation: landscape) and (min-device-width: 320px) and (max-device-width: 1400px) {
     #buttons>button{
         font-size: 3vh;
         width: 13.5vh;
@@ -120,6 +119,7 @@ body{
         margin: 10px;
     }
 }
+
 .correctLetter{
     background-color: #506A64;
     color: #F2E5D5;
